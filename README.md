@@ -12,3 +12,8 @@ Yes, this is currently written for my development environment. Future versions m
 
 ## Why?
 I use Kali in a virtual machine on a regular basis, and I really dislike using mouse-clicks and repeated key-strokes to configure things. Vagrant captures all the standard configuration I use, and Ansible makes configuration of applications in Kali super easy. Having a fresh machine boot, update, and install needed packages with a simple command (`vagrant up`) is just cool, OK?
+
+## TO-DO
+1. Change openvas default configurations and move openvas config into its own Ansible role
+2. Lock down bridged interface for scanning
+3. Stop using default "vagrant" user and insecure keys
