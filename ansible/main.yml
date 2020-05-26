@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: true
+
+  # List of packages to install via apt.
+  vars_files:
+    - packages.yml
+
+  # Ensure target system is Ansible-compliant and otherwise up-to-date.
+  pre_tasks:
+    # The raw module doesn't require python to be present on the remote machine.
+    # Ansible is sending the command "raw" over ssh.
+    - name: Install Python if not already present.
+      raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3-minimal)
+      changed_when: false
+
+    # Because 'gather_facts' wasn't used in this play, we are invoking the setup
+    # module.
+    - name: Gather facts after Python is definitely present.
+      setup:
+
+    - name: Upgrade OS and update repositories cache.
+      apt:
+        upgrade: dist
+        update_cache: true
+        cache_valid_time: 86400
+
+  tasks:
+    # This task installs all packages listed in packages.yml
+    - name: Install packages.
+      apt:
+        name: "{{ packages }}"
+
+    # This takes a long time. Seriously...just...just go get a beer.
+    - name: Configure OpenVAS - run openvas-setup.
+      command: openvas-setup
+
+    # Edit default OpenVAS configuration
+    - name: Configure OpenVAS - edit defaults
+      lineinfile:
