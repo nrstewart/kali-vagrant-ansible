@@ -19,22 +19,14 @@
     - name: Gather facts after Python is definitely present.
       setup:
 
-    - name: Upgrade OS and update repositories cache.
-      apt:
-        upgrade: full
-        update_cache: true
-        cache_valid_time: 86400
+        - name: Upgrade OS and update repositories cache.
+          apt:
+            upgrade: full
+            update_cache: true
+            cache_valid_time: 86400
 
   tasks:
     # This task installs all packages listed in packages.yml
     - name: Install packages.
       apt:
         name: "{{ packages }}"
-
-    # This takes a long time. Seriously...just...just go get a beer.
-    - name: Configure OpenVAS - run openvas-setup.
-      command: openvas-setup
-
-    # Edit default OpenVAS configuration
-    - name: Configure OpenVAS - edit defaults
-      lineinfile:
