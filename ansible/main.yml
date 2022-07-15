@@ -19,11 +19,11 @@
     - name: Gather facts after Python is definitely present.
       setup:
 
-        - name: Upgrade OS and update repositories cache.
-          apt:
-            upgrade: full
-            update_cache: true
-            cache_valid_time: 86400
+    - name: Upgrade OS and update repositories cache.
+      apt:
+        upgrade: full
+        update_cache: true
+        cache_valid_time: 86400
 
   tasks:
     # This task installs all packages listed in packages.yml
