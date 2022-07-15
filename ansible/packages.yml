@@ -1,3 +1,4 @@
 ---
 packages:
   - openvas
+  - realtek-rtl88xxau-dkms
